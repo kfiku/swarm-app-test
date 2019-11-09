@@ -1,0 +1,21 @@
+db:
+  image: mongo
+  ports:
+    - '27017:27017'
+  volumes:
+    - 'mongo:/data/db'
+web:
+  image: node:12
+  command: npm start
+  volumes:
+    - .:/app
+  working_dir: /app
+  ports:
+    - "3000:3000"
+  links:
+    - db
+  environment:
+    PORT: 3000
+    MONGO_HOST: db
+    DB_NAME: 'visits'
+    MONGO_PORT: 27017
